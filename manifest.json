@@ -1,0 +1,17 @@
+{
+  "name": "So.cl notifications",
+  "version": "1.0.0",
+  "description": "View notifications of So.cl, anywhere you go on the web.",
+  "icons": {
+    "16": "img/icon16.png",
+    "48": "img/icon48.png",
+    "128": "img/icon128.png"
+  },
+  "permissions": ["http://www.so.cl/Fusion/*"],
+  "background_page": "background.html",
+  "browser_action": {
+    "default_title": "So.cl Notifications",
+    "default_popup": "popup.html",
+    "default_icon": "img/icon48.png"
+  }
+}

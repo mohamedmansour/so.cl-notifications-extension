@@ -1,0 +1,22 @@
+<!DOCTYPE html> 
+<html>
+<link rel="stylesheet" href="/css/popup.css" />
+<script src="/js/libs/jquery-1.7.1.min.js"></script>
+<script src="/js/libs/jquery.tmpl.min.js"></script>
+<script src="/js/popup_controller.js"></script>
+ <section>
+  <h1>Your Notifications</h1>
+  <ul id="notifications">
+    <li style="text-align: center;">Loading please wait ...<br /><img src="/img/ajax-loader.gif" /></li>
+  </ul>
+ </section>
+ <script id="notification-item-template" type="text/x-jquery-tmpl">
+  <li class="notificaton-item{{if isNew}} new{{/if}}">
+    <span><a href="${sourceLink}" title="${sourceName}"><img src="${sourcePhotoURL}" /></a>{{html htmlSynopsis}}</span>
+  </li>
+ </script>
+ <script>
+  var popup = new PopupController();
+  popup.init();
+ </script>
+</html>
