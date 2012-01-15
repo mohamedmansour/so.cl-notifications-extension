@@ -60,6 +60,10 @@ BackgroundController.prototype.init = function() {
 BackgroundController.prototype.startNotificationCheckService = function() {
   var that = this;
   var checkLoop = function() {
+    // Attempt to relogin if your not signed in.
+    if (!that.socl.isAuthenticated()) {
+      that.socl.login();
+    }
     that.socl.checkNotifications(that.onNotificationCheckReceived.bind(that));
   };
   this.notificationCheckServiceInterval =
