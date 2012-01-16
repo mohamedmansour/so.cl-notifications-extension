@@ -153,7 +153,7 @@ SoclAPI.prototype.requestService = function(payload) {
   
   // Everything was successfull, just do it!
   $.ajax({
-    type: payload.data ? 'POST' : 'GET',
+    type: payload.type || (payload.data ? 'POST' : 'GET'),
     url: payload.url,
     data: payload.data || null,
     dataType: 'json',
@@ -196,6 +196,7 @@ SoclAPI.prototype.getNotifications = function(callback) {
 
 SoclAPI.prototype.markNotificationsVisited = function() {
   this.requestService({
+    type: 'PUT',
     url: SoclAPI.NOTIFICATION_SEEN_SERVICE
   });
 };
