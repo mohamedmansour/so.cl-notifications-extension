@@ -19,6 +19,7 @@ SoclAPI.NOTIFICATION_SERVICE = 'http://www.so.cl/Fusion/OpenV4/Notifications?las
 SoclAPI.NOTIFICATION_CHECK_SERVICE = 'http://www.so.cl/Fusion/OpenV4/$batch';
 SoclAPI.NOTIFICATION_SEEN_SERVICE = 'http://www.so.cl/Fusion/OpenV4/Notifications(\'seen\')';
 SoclAPI.GLOBAL_COUNTERS_SERVICE = 'http://www.so.cl/Fusion/GlobalCountersV1/$batch';
+SoclAPI.SEARCH_SERVICE = 'http://www.so.cl/Fusion/OpenV4/streamsearch'; //('9397')
 
 /**
  * We we require the signing key so we can sign every AJAX Request.
@@ -38,6 +39,7 @@ SoclAPI.prototype.login = function() {
 
 /**
  * Checks if the string ends with the specified pattern.
+ * 
  * @param {string} input The data to check.
  * @param {pattern} pattern The pattern to match.
  */
@@ -48,6 +50,7 @@ SoclAPI.prototype.endsWith = function(input, pattern) {
 
 /**
  * Checks if the input is null or has any whitespace.
+ * 
  * @param {string} input The data to check.
  */
 SoclAPI.prototype.isNullOrWhiteSpace = function(input) {
@@ -57,6 +60,7 @@ SoclAPI.prototype.isNullOrWhiteSpace = function(input) {
 
 /**
  * Use HMAC-SHA256 to sign the give data
+ * 
  * @param {string} data Data for signing.
  * @param {string} key Secret signing key
  */
@@ -66,6 +70,7 @@ SoclAPI.prototype.SignHMACSHA256 = function(data, key) {
 
 /**
  * Use HMAC-SHA256 to sign the give data and return in a BASE64 encoded string
+ * 
  * @param {string} data Data for signing.
  * @param {string} key Secret signing key
  */
@@ -75,6 +80,7 @@ SoclAPI.prototype.Base64SignHMACSHA256 = function(data, key) {
 
 /**
  * Install the preauth filter so we can sign every single ajax request.
+ * 
  * @param {object} option AJAX Request option.
  */
 SoclAPI.prototype.preAuthFilter = function(options) {
@@ -107,6 +113,7 @@ SoclAPI.prototype.isAuthenticated = function() {
 
 /**
  * Requests the service and parses it so the user can handle it.
+ * 
  * @param {object} payload An object that contains
  */
 SoclAPI.prototype.requestService = function(payload) {
@@ -165,6 +172,8 @@ SoclAPI.prototype.requestService = function(payload) {
 
 /**
  * Checks socl if any new notifications are available.
+ *
+ * @param {function(object)} callback Fired when any result appears.
  */
 SoclAPI.prototype.checkNotifications = function(callback) {
   this.requestService({
@@ -181,6 +190,8 @@ SoclAPI.prototype.checkNotifications = function(callback) {
 
 /**
  * Checks socl if any new notifications are available.
+ *
+ * @param {function(object)} callback Fired when any result appears.
  */
 SoclAPI.prototype.getNotifications = function(callback) {
   this.requestService({
@@ -194,9 +205,49 @@ SoclAPI.prototype.getNotifications = function(callback) {
   });
 };
 
-SoclAPI.prototype.markNotificationsVisited = function() {
+/**
+ * Tells so.cl that the notifications were read.
+ */
+SoclAPI.prototype.markNotificationsRead = function() {
   this.requestService({
     type: 'PUT',
     url: SoclAPI.NOTIFICATION_SEEN_SERVICE
+  });
+};
+
+/**
+ * Get the individual post data.
+ * 
+ * @param {object} payload The data to search for the post.
+ * @param {function(object)} callback Fired when any result appears.
+ */
+SoclAPI.prototype.getPost = function(payload, callback) {
+  if (!payload.user_id) {
+    callback({
+      statusCode: 400,
+      status: 'Error',
+      error: 'user_id was not supplied'
+    });
+    return;
+  }
+  if (!payload.post_id) {
+    callback({
+      statusCode: 400,
+      status: 'Error',
+      error: 'post_id was not supplied'
+    });
+    return;
+  }
+  var url = SoclAPI.SEARCH_SERVICE + '(' + payload.user_id + ')?$filter:open.Post.id=\'' + payload.post_id + '\'' +
+      '&$orderby:-open.Post.createdtime&$type:open.Post&$top:1&scope:all';
+  this.requestService({
+    url: url,
+    type: 'GET',
+    callback: function(data) {
+      var data = data[0];
+      if (data) {
+        callback(data.items);
+      }
+    }.bind(this)
   });
 };

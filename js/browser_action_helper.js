@@ -20,7 +20,7 @@ BrowserActionRenderer.prototype.drawBadgeIcon = function(count, newItem) {
 
   // If count is zero or smaller, show the badge as inactive,
   // regardless of newItem's value
-  newItem = newItem & (count >= 0);
+  newItem = newItem & (count > 0);
   
   if (newItem) {
     ctx.fillStyle = 'rgba(74, 74, 74, 1)';

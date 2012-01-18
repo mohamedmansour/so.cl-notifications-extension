@@ -81,6 +81,6 @@ BackgroundController.prototype.onNotificationCheckReceived = function(data) {
 };
 
 BackgroundController.prototype.markNotificationsVisited = function() {
-  this.socl.markNotificationsVisited();
+  this.socl.markNotificationsRead();
   this.browserActionRenderer.drawBadgeIcon(0, true);
 };
