@@ -1,7 +1,7 @@
 So.cl Notifications for Google+ Chrome Extension
 ---------------------------------------
 
-See what’s happening on So.cl with the So.cl Notifications extension.
+See whatï¿½s happening on So.cl with the So.cl Notifications extension.
 
 When you have a new notification in so.cl, the extension will turn grey and 
 show you how many notifications you have. Once you click on that button, the
@@ -22,4 +22,4 @@ Look in LICENSE.md
 Screenshots
 ----------
 
-![Screenshot of the Chrome Extension](https://github.com/mohamedmansour/so.cl-notifications/raw/master/screenshot/screen.png)
+![Screenshot of the Chrome Extension](https://github.com/mohamedmansour/so.cl-notifications-extension/raw/master/screenshot/screen.png)
