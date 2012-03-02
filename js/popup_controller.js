@@ -21,7 +21,7 @@ PopupController.prototype.init = function() {
         synopsis: elt.synopsis,
         permalink: elt.permalink,
         htmlSynopsis: elt.htmlSynopsis,
-        sourcePhotoURL: 'http://graph.facebook.com/' + elt.primarySource.authids[0].substring(3) + '/picture?type=square',
+        sourcePhotoURL: 'http://cdn3.so.cl/handlers/profileImage?w=30&id=' + elt.primarySource.id,
         sourceName: elt.primarySource.name,
         sourceLink: 'http://www.so.cl/#/@' + elt.primarySource.screenname
       });
