@@ -17,13 +17,13 @@ PopupController.prototype.init = function() {
     notificationsDOM.html('');
     data.forEach(function(elt, idx) {
       var tmpl = that.itemTemplate.tmpl({
-        isNew: !elt.actions.seen,
+        isNew: !elt.seen,
         synopsis: elt.synopsis,
         permalink: elt.permalink,
         htmlSynopsis: elt.htmlSynopsis,
-        sourcePhotoURL: 'http://graph.facebook.com/' + elt.sourceuser.authids[0].substring(3) + '/picture?type=square',
-        sourceName: elt.sourceuser.name,
-        sourceLink: 'http://www.so.cl/#/@' + elt.sourceuser.screenname
+        sourcePhotoURL: 'http://graph.facebook.com/' + elt.primarySource.authids[0].substring(3) + '/picture?type=square',
+        sourceName: elt.primarySource.name,
+        sourceLink: 'http://www.so.cl/#/@' + elt.primarySource.screenname
       });
       tmpl.appendTo(notificationsDOM);
     });
